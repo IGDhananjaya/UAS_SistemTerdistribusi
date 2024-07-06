@@ -1,0 +1,44 @@
+services:
+  api-service:
+    build:
+      context: D:/Materi Sistem Terdistribusi/UAS/api-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+      - redpanda
+
+  flask-service:
+    build:
+      context: D:/Materi Sistem Terdistribusi/UAS/flask-service
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
+
+  log-service:
+    build:
+      context: D:/Materi Sistem Terdistribusi/UAS/log-service
+    ports:
+      - "6000:6000"
+    depends_on:
+      - redpanda
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - D:/Materi Sistem Terdistribusi/UAS/mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  redpanda:
+    image: vectorized/redpanda:latest
+    environment:
+      - REDPANDA_AUTO_CREATE_TOPICS=true
+    ports:
+      - "9092:9092"
