@@ -1,1 +1,7 @@
 "/mysql/mysql_data/" 
+api-service/
+docker-compose.yml
+flask-service/
+log-services/
+mysql/
+redpanda/
